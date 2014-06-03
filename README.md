@@ -10,7 +10,7 @@ Soft deletion for Rails 4, done right.
 - Standard set of "soft deletion" methods (`trash`, `recover`, `trashed?`)
 - Explicit trashable dependencies (automatically trash associated records)
 - Low-overhead (minimize queries)
-- Validation on `recover`
+- No validations on `recover`. (If your records became invalid after they were trashed, check for this yourself)
 - Small, readable codebase
 
 ### Non-goals
