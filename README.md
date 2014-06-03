@@ -1,4 +1,4 @@
-trashable
+storage_unit
 =========
 
 [![Travis][0]](https://travis-ci.org/dobtco/pretty_id)
@@ -11,7 +11,7 @@ trashable
 ## Goals
 
 - Standard set of "soft deletion" methods (`trash`, `recover`, `trashed?`)
-- Explicit trashable dependencies (automatically trash associated records)
+- Explicit storage_unit dependencies (automatically trash associated records)
 - Low-overhead (minimize queries)
 - No validations on `recover`. (If your records became invalid after they were trashed, check for this yourself)
 - Small, readable codebase
@@ -26,7 +26,7 @@ trashable
 
 ```ruby
 # In your Gemfile:
-gem 'trashable'
+gem 'storage_unit'
 
 # In a migration:
 add_column :posts, :deleted_at, :datetime
@@ -36,7 +36,7 @@ add_column :posts, :deleted_at, :datetime
 
 ```ruby
 class Post < ActiveRecord::Base
-  trashable
+  has_storage_unit
 end
 
 post = Post.create
@@ -57,12 +57,12 @@ Post.all # => []
 
 ```ruby
 class User < ActiveRecord::Base
-  trashable, cascade: [:posts]
+  has_storage_unit, cascade: [:posts]
   has_many :posts
 end
 
 class Post < ActiveRecord::Base
-  trashable
+  has_storage_unit
 end
 
 user = User.create
@@ -81,7 +81,7 @@ post.trashed? # => false
 
 ```ruby
 class Post < ActiveRecord::Base
-  trashable
+  has_storage_unit
   after_recover :ensure_record_is_still_valid
 
   private
@@ -97,14 +97,14 @@ end
 
 ```ruby
 class Post < ActiveRecord::Base
-  trashable column: :trashed_at
+  has_storage_unit column: :trashed_at
 end
 ```
 
 ## License
 MIT.
 
-[0]: https://img.shields.io/travis/dobtco/trashable.svg
-[1]: https://img.shields.io/codeclimate/github/dobtco/trashable.svg
-[2]: https://img.shields.io/coveralls/dobtco/trashable.svg
-[3]: https://img.shields.io/gem/v/trashable.svg
+[0]: https://img.shields.io/travis/dobtco/storage_unit.svg
+[1]: https://img.shields.io/codeclimate/github/dobtco/storage_unit.svg
+[2]: https://img.shields.io/coveralls/dobtco/storage_unit.svg
+[3]: https://img.shields.io/gem/v/storage_unit.svg

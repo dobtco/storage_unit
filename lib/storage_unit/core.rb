@@ -1,4 +1,4 @@
-module Trashable
+module StorageUnit
   module Core
     extend ActiveSupport::Concern
 

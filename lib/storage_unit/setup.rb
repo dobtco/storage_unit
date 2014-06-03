@@ -1,4 +1,4 @@
-module Trashable
+module StorageUnit
   module Setup
     extend ActiveSupport::Concern
 
@@ -14,7 +14,7 @@ module Trashable
           cascade: []
         }.merge(opts)
 
-        include Trashable::Core
+        include StorageUnit::Core
       end
     end
   end

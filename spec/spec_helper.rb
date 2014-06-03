@@ -7,7 +7,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
 ]
 
 require 'rails/all'
-require 'trashable'
+require 'storage_unit'
 require 'rspec/rails'
 require_relative 'setup'
 

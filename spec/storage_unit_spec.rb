@@ -1,45 +1,45 @@
 require 'spec_helper'
 
-class TrashableUser < ActiveRecord::Base
+class User < ActiveRecord::Base
   self.table_name = 'users'
-  trashable
+  has_storage_unit
 end
 
-class TrashableUserWithTrashedAtColumn < ActiveRecord::Base
+class UserWithTrashedAtColumn < ActiveRecord::Base
   self.table_name = 'users'
-  trashable column: :trashed_at
+  has_storage_unit column: :trashed_at
 end
 
 class TrashableNote < ActiveRecord::Base
   self.table_name = 'notes'
-  trashable
+  has_storage_unit
   validates :body, presence: true
 end
 
-class TrashableUserWithNote < ActiveRecord::Base
+class UserWithNote < ActiveRecord::Base
   self.table_name = 'users'
-  has_many :notes, class_name: 'TrashableNoteForUser', foreign_key: 'user_id'
-  trashable cascade: [:notes]
+  has_many :notes, class_name: 'NoteForUser', foreign_key: 'user_id'
+  has_storage_unit cascade: [:notes]
 end
 
-class TrashableNoteForUser < TrashableNote
-  belongs_to :user, class_name: 'TrashableUserWithNote'
+class NoteForUser < TrashableNote
+  belongs_to :user, class_name: 'UserWithNote'
 end
 
 describe 'Options' do
   describe 'column' do
-    let!(:user) { TrashableUserWithTrashedAtColumn.create }
+    let!(:user) { UserWithTrashedAtColumn.create }
 
     it 'functions properly' do
-      expect(TrashableUserWithTrashedAtColumn.count).to eq 1
+      expect(UserWithTrashedAtColumn.count).to eq 1
       user.trash!
-      expect(TrashableUserWithTrashedAtColumn.count).to eq 0
+      expect(UserWithTrashedAtColumn.count).to eq 0
     end
   end
 
   describe 'cascade' do
-    let!(:user) { TrashableUserWithNote.create }
-    let!(:note) { TrashableNoteForUser.create(body: 'foo', user: user) }
+    let!(:user) { UserWithNote.create }
+    let!(:note) { NoteForUser.create(body: 'foo', user: user) }
 
     describe '#trash!' do
       it 'trashes associated records' do
@@ -69,23 +69,23 @@ describe 'Options' do
 end
 
 describe 'Default scope' do
-  let!(:user) { TrashableUser.create }
+  let!(:user) { User.create }
 
   it 'excludes trashed objects' do
-    expect(TrashableUser.count).to eq 1
+    expect(User.count).to eq 1
     user.update deleted_at: Time.now
-    expect(TrashableUser.count).to eq 0
+    expect(User.count).to eq 0
   end
 
   it 'can be overridden' do
-    expect(TrashableUser.count).to eq 1
+    expect(User.count).to eq 1
     user.update deleted_at: Time.now
-    expect(TrashableUser.with_deleted.count).to eq 1
+    expect(User.with_deleted.count).to eq 1
   end
 end
 
 describe '#trashed?' do
-  let!(:user) { TrashableUser.create }
+  let!(:user) { User.create }
   subject { user }
 
   it { should_not be_trashed }
@@ -97,7 +97,7 @@ describe '#trashed?' do
 end
 
 describe '#trash!' do
-  let!(:user) { TrashableUser.create }
+  let!(:user) { User.create }
 
   it 'functions properly' do
     expect(user.deleted_at).to be_blank
@@ -108,9 +108,9 @@ describe '#trash!' do
 
   context 'with callbacks' do
     before do
-      TrashableUser.before_trash :do_before_trash
-      TrashableUser.after_trash :do_after_trash
-      TrashableUser.around_trash :do_around_trash
+      User.before_trash :do_before_trash
+      User.after_trash :do_after_trash
+      User.around_trash :do_around_trash
     end
 
     it 'calls them' do
@@ -123,7 +123,7 @@ describe '#trash!' do
 end
 
 describe '#recover!' do
-  let!(:user) { TrashableUser.create(deleted_at: Time.now) }
+  let!(:user) { User.create(deleted_at: Time.now) }
 
   it 'functions properly' do
     expect(user.deleted_at).to be_present
@@ -134,9 +134,9 @@ describe '#recover!' do
 
   context 'with callbacks' do
     before do
-      TrashableUser.before_recover :do_before_recover
-      TrashableUser.after_recover :do_after_recover
-      TrashableUser.around_recover :do_around_recover
+      User.before_recover :do_before_recover
+      User.after_recover :do_after_recover
+      User.around_recover :do_around_recover
     end
 
     it 'calls them' do
