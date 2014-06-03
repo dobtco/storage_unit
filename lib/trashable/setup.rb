@@ -11,7 +11,7 @@ module Trashable
 
         self.trashable_opts = {
           column: :deleted_at,
-          also_trash: []
+          cascade: []
         }.merge(opts)
 
         include Trashable::Core

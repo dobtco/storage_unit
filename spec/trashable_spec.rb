@@ -19,7 +19,7 @@ end
 class TrashableUserWithNote < ActiveRecord::Base
   self.table_name = 'users'
   has_many :notes, class_name: 'TrashableNoteForUser', foreign_key: 'user_id'
-  trashable also_trash: [:notes]
+  trashable cascade: [:notes]
 end
 
 class TrashableNoteForUser < TrashableNote
@@ -37,7 +37,7 @@ describe 'Options' do
     end
   end
 
-  describe 'also_trash' do
+  describe 'cascade' do
     let!(:user) { TrashableUserWithNote.create }
     let!(:note) { TrashableNoteForUser.create(body: 'foo', user: user) }
 

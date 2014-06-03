@@ -34,7 +34,7 @@ module Trashable
     end
 
     def trash_dependents
-      trashable_opts[:also_trash].each do |x|
+      trashable_opts[:cascade].each do |x|
         send(x).update_all trash_hash(DateTime.now)
       end
     end
@@ -47,7 +47,7 @@ module Trashable
     end
 
     def recover_dependents
-      trashable_opts[:also_trash].each do |x|
+      trashable_opts[:cascade].each do |x|
         send(x).with_deleted.update_all trash_hash(nil)
       end
     end
