@@ -6,10 +6,10 @@ module StorageUnit
     end
 
     module ClassMethods
-      def trashable(opts = {})
-        cattr_accessor :trashable_opts
+      def has_storage_unit(opts = {})
+        cattr_accessor :storage_unit_opts
 
-        self.trashable_opts = {
+        self.storage_unit_opts = {
           column: :deleted_at,
           cascade: []
         }.merge(opts)

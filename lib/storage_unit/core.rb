@@ -10,7 +10,7 @@ module StorageUnit
 
     module ClassMethods
       def with_deleted_scope_sql
-        all.table[trashable_opts[:column]].eq(nil).to_sql
+        all.table[storage_unit_opts[:column]].eq(nil).to_sql
       end
 
       # lifted from acts_as_paranoid, works around https://github.com/rails/rails/issues/4306
@@ -23,7 +23,7 @@ module StorageUnit
     end
 
     def trashed?
-      send(trashable_opts[:column]).present?
+      send(storage_unit_opts[:column]).present?
     end
 
     def trash!
@@ -34,7 +34,7 @@ module StorageUnit
     end
 
     def trash_dependents
-      trashable_opts[:cascade].each do |x|
+      storage_unit_opts[:cascade].each do |x|
         send(x).update_all trash_hash(DateTime.now)
       end
     end
@@ -47,13 +47,13 @@ module StorageUnit
     end
 
     def recover_dependents
-      trashable_opts[:cascade].each do |x|
+      storage_unit_opts[:cascade].each do |x|
         send(x).with_deleted.update_all trash_hash(nil)
       end
     end
 
     def trash_hash(value)
-      {}.tap { |h| h[trashable_opts[:column]] = value }
+      {}.tap { |h| h[storage_unit_opts[:column]] = value }
     end
   end
 end
