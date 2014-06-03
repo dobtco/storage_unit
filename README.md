@@ -17,14 +17,19 @@ trashable
 - Reflection on Rails' associations
 - Generally, anything weird or complex happening behind the scenes
 
+## Installation
+
+```ruby
+# In your Gemfile:
+gem 'trashable'
+
+# In a migration:
+add_column :posts, :deleted_at, :datetime
+```
+
 ## Usage
 
 ```ruby
-# Table name: posts
-#
-#  id              :integer
-#  deleted_at      :datetime
-
 class Post < ActiveRecord::Base
   trashable
 end
