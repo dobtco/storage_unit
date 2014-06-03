@@ -31,17 +31,17 @@ class Post < ActiveRecord::Base
   trashable
 end
 
-p = Post.create
-Post.all # => [p]
-p.trashed? # => false
+post = Post.create
+Post.all # => [post]
+post.trashed? # => false
 
-p.trash!
-p.trashed? # => true
+post.trash!
+post.trashed? # => true
 Post.all # => []
-Post.with_deleted.all # => [p]
+Post.with_deleted.all # => [post]
 
-p.recover!
-p.trashed? # => false
+post.recover!
+post.trashed? # => false
 Post.all # => []
 ```
 
@@ -57,16 +57,16 @@ class Post < ActiveRecord::Base
   trashable
 end
 
-u = User.create
-p = Post.create
+user = User.create
+post = Post.create
 
-u.trash!
-u.trashed? # => true
-p.trashed? # => true
+user.trash!
+user.trashed? # => true
+post.trashed? # => true
 
-u.recover!
-u.trashed? # => false
-p.trashed? # => false
+user.recover!
+user.trashed? # => false
+post.trashed? # => false
 ```
 
 ### Callbacks
