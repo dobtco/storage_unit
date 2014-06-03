@@ -1,6 +1,11 @@
 trashable
 =========
 
+[![Travis][0]](https://travis-ci.org/dobtco/pretty_id)
+[![Code Climate][1]](https://codeclimate.com/github/dobtco/pretty_id)
+[![Coveralls][2]](https://coveralls.io/r/dobtco/pretty_id)
+[![RubyGem][3]](http://rubygems.org/gems/pretty_id)
+
 :recycle: Soft deletion for Rails 4.1+, done right.
 
 ## Goals
@@ -98,3 +103,8 @@ end
 
 ## License
 MIT.
+
+[0]: https://img.shields.io/travis/dobtco/trashable.svg
+[1]: https://img.shields.io/codeclimate/github/dobtco/trashable.svg
+[2]: https://img.shields.io/coveralls/dobtco/trashable.svg
+[3]: https://img.shields.io/gem/v/trashable.svg
