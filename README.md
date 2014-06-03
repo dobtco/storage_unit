@@ -38,6 +38,7 @@ p.trashed? # => false
 p.trash!
 p.trashed? # => true
 Post.all # => []
+Post.with_deleted.all # => [p]
 
 p.recover!
 p.trashed? # => false
