@@ -1,10 +1,10 @@
 storage_unit
 =========
 
-[![Travis][0]](https://travis-ci.org/dobtco/pretty_id)
-[![Code Climate][1]](https://codeclimate.com/github/dobtco/pretty_id)
-[![Coveralls][2]](https://coveralls.io/r/dobtco/pretty_id)
-[![RubyGem][3]](http://rubygems.org/gems/pretty_id)
+[![Travis][0]](https://travis-ci.org/dobtco/storage_unit)
+[![Code Climate][1]](https://codeclimate.com/github/dobtco/storage_unit)
+[![Coveralls][2]](https://coveralls.io/r/dobtco/storage_unit)
+[![RubyGem][3]](http://rubygems.org/gems/storage_unit)
 
 :recycle: Soft deletion for Rails 4.1+, done right.
 
