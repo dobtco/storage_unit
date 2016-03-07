@@ -34,7 +34,7 @@ module StorageUnit
     end
 
     def trash_dependents
-      storage_unit_opts[:cascade].each do |x|
+      Array(storage_unit_opts[:cascade]).each do |x|
         send(x).update_all trash_hash(DateTime.now)
       end
     end
@@ -47,7 +47,7 @@ module StorageUnit
     end
 
     def recover_dependents
-      storage_unit_opts[:cascade].each do |x|
+      Array(storage_unit_opts[:cascade]).each do |x|
         send(x).with_deleted.update_all trash_hash(nil)
       end
     end

@@ -19,7 +19,7 @@ end
 class UserWithNote < ActiveRecord::Base
   self.table_name = 'users'
   has_many :notes, class_name: 'NoteForUser', foreign_key: 'user_id'
-  has_storage_unit cascade: [:notes]
+  has_storage_unit cascade: :notes
 end
 
 class NoteForUser < TrashableNote
