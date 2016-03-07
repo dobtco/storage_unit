@@ -82,6 +82,12 @@ describe 'Default scope' do
     user.update deleted_at: Time.now
     expect(User.with_deleted.count).to eq 1
   end
+
+  it 'can be overriden with a block' do
+    user.update deleted_at: Time.now
+    expect { User.find(user.id) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect(User.unscoped{ User.find(user.id) }).to eq user
+  end
 end
 
 describe '#trashed?' do
