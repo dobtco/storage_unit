@@ -90,6 +90,15 @@ describe 'Default scope' do
   end
 end
 
+describe '.deleted_only' do
+  let!(:user) { User.create }
+  let!(:deleted_user) { User.create(deleted_at: Time.now) }
+
+  it 'functions properly' do
+    expect(User.deleted_only.count).to eq 1
+  end
+end
+
 describe '#trashed?' do
   let!(:user) { User.create }
   subject { user }

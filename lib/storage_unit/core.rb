@@ -13,12 +13,20 @@ module StorageUnit
         all.table[storage_unit_opts[:column]].eq(nil).to_sql
       end
 
+      def deleted_only_scope_sql
+        all.table[storage_unit_opts[:column]].not_eq(nil).to_sql
+      end
+
       # lifted from acts_as_paranoid, works around https://github.com/rails/rails/issues/4306
       # with this in place Post.limit(10).with_deleted, will work as expected
       def with_deleted
         scope = self.all
         scope.where_values.delete(with_deleted_scope_sql)
         scope
+      end
+
+      def deleted_only
+        with_deleted.where(deleted_only_scope_sql)
       end
     end
 

@@ -46,7 +46,11 @@ post.trashed? # => false
 post.trash!
 post.trashed? # => true
 Post.all # => []
-Post.with_deleted.all # => [post]
+Post.with_deleted # => [post]
+
+new_post = Post.create
+Post.with_deleted # => [post, new_post]
+Post.deleted_only # => [post]
 
 post.recover!
 post.trashed? # => false
