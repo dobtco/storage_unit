@@ -3,3 +3,6 @@ cache: bundler
 script: bundle exec rspec
 notifications:
   email: false
+gemfile:
+  - gemfiles/rails_5.gemfile
+  - gemfiles/rails_4.gemfile
