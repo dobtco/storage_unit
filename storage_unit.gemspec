@@ -19,8 +19,9 @@ Gem::Specification.new do |s|
 
   s.homepage = 'http://github.com/dobtco/storage_unit'
 
-  s.add_dependency 'rails', '~> 4.1', '>= 4.1.0'
+  s.add_dependency 'rails', '>= 4.1.0'
 
+  s.add_development_dependency 'appraisal'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'guard-rspec'
   s.add_development_dependency 'rspec-rails'

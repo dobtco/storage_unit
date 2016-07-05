@@ -3,30 +3,22 @@ module StorageUnit
     extend ActiveSupport::Concern
 
     included do
-      default_scope { where(with_deleted_scope_sql) }
+      default_scope { where(default_scope_hash) }
       define_model_callbacks :trash
       define_model_callbacks :recover
     end
 
     module ClassMethods
-      def with_deleted_scope_sql
-        all.table[storage_unit_opts[:column]].eq(nil).to_sql
+      def default_scope_hash
+        { storage_unit_opts[:column] => nil }
       end
 
-      def deleted_only_scope_sql
-        all.table[storage_unit_opts[:column]].not_eq(nil).to_sql
-      end
-
-      # lifted from acts_as_paranoid, works around https://github.com/rails/rails/issues/4306
-      # with this in place Post.limit(10).with_deleted, will work as expected
       def with_deleted
-        scope = self.all
-        scope.where_values.delete(with_deleted_scope_sql)
-        scope
+        self.all.unscope(where: storage_unit_opts[:column])
       end
 
       def deleted_only
-        with_deleted.where(deleted_only_scope_sql)
+        with_deleted.where.not(default_scope_hash)
       end
     end
 
